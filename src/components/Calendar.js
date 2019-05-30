@@ -36,6 +36,7 @@ class Calendar extends PureComponent {
     this.focusToDate = this.focusToDate.bind(this);
     this.updateShownDate = this.updateShownDate.bind(this);
     this.handdleClickMonth = this.handdleClickMonth.bind(this);
+    this.handdleClickYear = this.handdleClickYear.bind(this);
     this.handleRangeFocusChange = this.handleRangeFocusChange.bind(this);
     this.renderDateDisplay = this.renderDateDisplay.bind(this);
     this.onDragSelectionStart = this.onDragSelectionStart.bind(this);
@@ -153,9 +154,13 @@ class Calendar extends PureComponent {
     this.setState({currentMonth: moment(newDate)})
 
   }
+  handdleClickYear(value) {
+    this.props.onClickCurrentYear && this.props.onClickCurrentYear(value)
+  }
   handdleClickMonth(value) {
     this.props.onClickCurrentMonth && this.props.onClickCurrentMonth(value);
   }
+  
   handleRangeFocusChange(rangesIndex, rangeItemIndex) {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange([rangesIndex, rangeItemIndex]);
   }
@@ -193,26 +198,17 @@ class Calendar extends PureComponent {
               <button
               className="button"
                 onClick={() => this.handdleClickMonth(moment(focusedDate))}>
-                    {months[focusedDate.getMonth()]+' '+(focusedDate.getFullYear() + 543)}
+                    {months[focusedDate.getMonth()]}
               </button>
             </span>
             <span className={styles.monthAndYearDivider} />
-            {/* <span className={styles.yearPicker}>
-              <select
-                value={focusedDate.getFullYear()}
-                onChange={e => changeShownDate(e.target.value, 'setYear')}>
-                {new Array(upperYearLimit - lowerYearLimit + 1)
-                  .fill(upperYearLimit)
-                  .map((val, i) => {
-                    const year = val - i;
-                    return (
-                      <option key={year} value={year}>
-                        {year + 543}
-                      </option>
-                    );
-                  })}
-              </select>
-            </span> */}
+            <span className={styles.yearPicker}>
+            <button
+              className="button"
+                onClick={() => this.handdleClickYear(moment(focusedDate))}>
+                    {focusedDate.getFullYear() + 543}
+              </button>
+            </span> 
           </span>
         ) : (
           <span className={styles.monthAndYearPickers}>
@@ -513,6 +509,7 @@ Calendar.propTypes = {
   onChange: PropTypes.func,
   onPreviewChange: PropTypes.func,
   onClickCurrentMonth: PropTypes.func,
+  onClickCurrentYear: PropTypes.func,
   onRangeFocusChange: PropTypes.func,
   classNames: PropTypes.object,
   locale: PropTypes.object,

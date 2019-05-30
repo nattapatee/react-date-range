@@ -101,7 +101,9 @@ class DateRange extends Component {
   }
   handleClickCurrentMonth(value) {
     this.props.onClickCurrentMonth && this.props.onClickCurrentMonth(value);
-
+  }
+  handdleClickCurrentYear(value) {
+    this.props.onClickCurrentYear && this.props.onClickCurrentYear(value)
   }
   updatePreview(val) {
     if (!val) {
@@ -119,6 +121,7 @@ class DateRange extends Component {
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
         onClickCurrentMonth={this.handleClickCurrentMonth}
+        onClickCurrentYear={this.handdleClickCurrentYear}
         preview={this.state.preview}
         onPreviewChange={value => {
           this.updatePreview(value ? this.calcNewSelection(value) : null);
@@ -148,6 +151,7 @@ DateRange.propTypes = {
   ...Calendar.propTypes,
   onChange: PropTypes.func,
   onClickCurrentMonth: PropTypes.func,
+  onClickCurrentYear: PropTypes.func,
   onRangeFocusChange: PropTypes.func,
   className: PropTypes.string,
   ranges: PropTypes.arrayOf(rangeShape),
