@@ -1,5 +1,5 @@
 {
-  "name": "react-date-range",
+  "name": "react-date-range-thaiyear-custom",
   "version": "1.0.0-beta",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
@@ -14,11 +14,6 @@
     "preversion": "yarn clear & yarn build"
   },
   "keywords": [
-    "react",
-    "date",
-    "range",
-    "datepicker",
-    "rangepicker"
   ],
   "contributors": [
     "Burak Can <neoberg@gmail.com> (https://github.com/burakcan)",
@@ -28,7 +23,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/Adphorus/react-date-range"
+    "url": "https://github.com/nattapatee/react-date-range"
   },
   "bugs": {
     "url": "http://github.com/Adphorus/react-date-range/issues"
@@ -36,6 +31,7 @@
   "dependencies": {
     "classnames": "^2.2.1",
     "date-fns": "2.0.0-alpha.7",
+    "moment": "^2.24.0",
     "prop-types": "^15.5.10",
     "react-list": "^0.8.8"
   },

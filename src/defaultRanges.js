@@ -43,14 +43,14 @@ export function createStaticRanges(ranges) {
 
 export const defaultStaticRanges = createStaticRanges([
   {
-    label: 'Today',
+    label: 'วันนี้',
     range: () => ({
       startDate: defineds.startOfToday,
       endDate: defineds.endOfToday,
     }),
   },
   {
-    label: 'Yesterday',
+    label: 'เมื่อวาน',
     range: () => ({
       startDate: defineds.startOfYesterday,
       endDate: defineds.endOfYesterday,
@@ -58,28 +58,28 @@ export const defaultStaticRanges = createStaticRanges([
   },
 
   {
-    label: 'This Week',
+    label: 'อาทิตย์นี้',
     range: () => ({
       startDate: defineds.startOfWeek,
       endDate: defineds.endOfWeek,
     }),
   },
   {
-    label: 'Last Week',
+    label: 'อาทิตย์ที่แล้ว',
     range: () => ({
       startDate: defineds.startOfLastWeek,
       endDate: defineds.endOfLastWeek,
     }),
   },
   {
-    label: 'This Month',
+    label: 'เดือนนี้',
     range: () => ({
       startDate: defineds.startOfMonth,
       endDate: defineds.endOfMonth,
     }),
   },
   {
-    label: 'Last Month',
+    label: 'เดือนที่แล้ว',
     range: () => ({
       startDate: defineds.startOfLastMonth,
       endDate: defineds.endOfLastMonth,
@@ -88,6 +88,7 @@ export const defaultStaticRanges = createStaticRanges([
 ]);
 
 export const defaultInputRanges = [
+  /*
   {
     label: 'days up to today',
     range(value) {
@@ -117,4 +118,5 @@ export const defaultInputRanges = [
       return differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
     },
   },
+  */
 ];

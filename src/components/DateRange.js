@@ -99,6 +99,10 @@ class DateRange extends Component {
     this.setState({ focusedRange });
     this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
   }
+  handleClickCurrentMonth(value) {
+    this.props.onClickCurrentMonth && this.props.onClickCurrentMonth(value);
+
+  }
   updatePreview(val) {
     if (!val) {
       this.setState({ preview: null });
@@ -114,6 +118,7 @@ class DateRange extends Component {
       <Calendar
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
+        onClickCurrentMonth={this.handleClickCurrentMonth}
         preview={this.state.preview}
         onPreviewChange={value => {
           this.updatePreview(value ? this.calcNewSelection(value) : null);
@@ -142,6 +147,7 @@ DateRange.defaultProps = {
 DateRange.propTypes = {
   ...Calendar.propTypes,
   onChange: PropTypes.func,
+  onClickCurrentMonth: PropTypes.func,
   onRangeFocusChange: PropTypes.func,
   className: PropTypes.string,
   ranges: PropTypes.arrayOf(rangeShape),

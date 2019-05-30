@@ -19,6 +19,8 @@ import { getMonthDisplayRange } from '../utils';
 
 function renderWeekdays(styles, dateOptions) {
   const now = new Date();
+  const weekz = ["อา", "จ", "อ","พ", "พฤ", "ศ", "ส"];
+
   return (
     <div className={styles.weekDays}>
       {eachDayOfInterval({
@@ -26,7 +28,7 @@ function renderWeekdays(styles, dateOptions) {
         end: endOfWeek(now, dateOptions),
       }).map((day, i) => (
         <span className={styles.weekDay} key={i}>
-          {format(day, 'ddd', dateOptions)}
+          {weekz[i]}
         </span>
       ))}
     </div>

@@ -26,6 +26,8 @@ import {
 } from 'date-fns';
 import defaultLocale from 'date-fns/locale/en-US';
 import coreStyles from '../styles';
+import { Moment } from "moment";
+var moment = require('moment');
 
 class Calendar extends PureComponent {
   constructor(props, context) {
@@ -33,6 +35,7 @@ class Calendar extends PureComponent {
     this.changeShownDate = this.changeShownDate.bind(this);
     this.focusToDate = this.focusToDate.bind(this);
     this.updateShownDate = this.updateShownDate.bind(this);
+    this.handdleClickMonth = this.handdleClickMonth.bind(this);
     this.handleRangeFocusChange = this.handleRangeFocusChange.bind(this);
     this.renderDateDisplay = this.renderDateDisplay.bind(this);
     this.onDragSelectionStart = this.onDragSelectionStart.bind(this);
@@ -53,6 +56,7 @@ class Calendar extends PureComponent {
         disablePreview: false,
       },
       scrollArea: this.calcScrollArea(props),
+      currentMonth: null
     };
   }
   calcScrollArea(props) {
@@ -111,6 +115,7 @@ class Calendar extends PureComponent {
     this.setState({ preview });
   }
   componentDidMount() {
+    // this.setState({currentMonth: new date().getMonth()})
     if (this.props.scroll.enabled) {
       // prevent react-list's initial render focus problem
       setTimeout(() => this.focusToDate(this.state.focusedDate), 1);
@@ -144,6 +149,12 @@ class Calendar extends PureComponent {
     const newDate = min([max([modeMapper[mode](), minDate]), maxDate]);
     this.focusToDate(newDate, this.props, false);
     onShownDateChange && onShownDateChange(newDate);
+    //get currentMonth on focus
+    this.setState({currentMonth: moment(newDate)})
+
+  }
+  handdleClickMonth(value) {
+    this.props.onClickCurrentMonth && this.props.onClickCurrentMonth(value);
   }
   handleRangeFocusChange(rangesIndex, rangeItemIndex) {
     this.props.onRangeFocusChange && this.props.onRangeFocusChange([rangesIndex, rangeItemIndex]);
@@ -165,6 +176,7 @@ class Calendar extends PureComponent {
     const upperYearLimit = (maxDate || Calendar.defaultProps.maxDate).getFullYear();
     const lowerYearLimit = (minDate || Calendar.defaultProps.minDate).getFullYear();
     const styles = this.styles;
+    const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม","เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฏาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤษจิกายน", "ธันวาคม"];
     return (
       <div onMouseUp={e => e.stopPropagation()} className={styles.monthAndYearWrapper}>
         {showMonthArrow ? (
@@ -178,18 +190,14 @@ class Calendar extends PureComponent {
         {showMonthAndYearPickers ? (
           <span className={styles.monthAndYearPickers}>
             <span className={styles.monthPicker}>
-              <select
-                value={focusedDate.getMonth()}
-                onChange={e => changeShownDate(e.target.value, 'setMonth')}>
-                {locale.localize.months().map((month, i) => (
-                  <option key={i} value={i}>
-                    {month}
-                  </option>
-                ))}
-              </select>
+              <button
+              className="button"
+                onClick={() => this.handdleClickMonth(moment(focusedDate))}>
+                    {months[focusedDate.getMonth()]+' '+(focusedDate.getFullYear() + 543)}
+              </button>
             </span>
             <span className={styles.monthAndYearDivider} />
-            <span className={styles.yearPicker}>
+            {/* <span className={styles.yearPicker}>
               <select
                 value={focusedDate.getFullYear()}
                 onChange={e => changeShownDate(e.target.value, 'setYear')}>
@@ -199,12 +207,12 @@ class Calendar extends PureComponent {
                     const year = val - i;
                     return (
                       <option key={year} value={year}>
-                        {year}
+                        {year + 543}
                       </option>
                     );
                   })}
               </select>
-            </span>
+            </span> */}
           </span>
         ) : (
           <span className={styles.monthAndYearPickers}>
@@ -224,6 +232,8 @@ class Calendar extends PureComponent {
   }
   renderWeekdays() {
     const now = new Date();
+    const weekz = ["อา", "จ", "อ","พ", "พฤ", "ศ", "ส"];
+
     return (
       <div className={this.styles.weekDays}>
         {eachDayOfInterval({
@@ -231,7 +241,7 @@ class Calendar extends PureComponent {
           end: endOfWeek(now, this.dateOptions),
         }).map((day, i) => (
           <span className={this.styles.weekDay} key={i}>
-            {format(day, 'ddd', this.dateOptions)}
+              วันนน          
           </span>
         ))}
       </div>
@@ -259,7 +269,7 @@ class Calendar extends PureComponent {
                 <input
                   disabled={range.disabled}
                   readOnly
-                  value={this.formatDateDisplay(range.startDate, 'Early')}
+                  value={this.formatDateDisplay(range.startDate, 'เริ่มต้น')}
                 />
               </span>
               <span
@@ -270,7 +280,7 @@ class Calendar extends PureComponent {
                 <input
                   disabled={range.disabled}
                   readOnly
-                  value={this.formatDateDisplay(range.endDate, 'Continuous')}
+                  value={this.formatDateDisplay(range.endDate, 'สิ้นสุด')}
                 />
               </span>
             </div>
@@ -343,7 +353,9 @@ class Calendar extends PureComponent {
   }
   formatDateDisplay(date, defaultText) {
     if (!date) return defaultText;
-    return format(date, this.props.dateDisplayFormat, this.dateOptions);
+    const months = ["ม.ค.", "ก.พ.", "มี.ค.","เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+    var resultDate = moment(date).date() + ' ' + months[date.getMonth()] + ' ' + (moment(date).year() + 543);
+    return resultDate;
   }
   render() {
     const {
@@ -500,6 +512,7 @@ Calendar.propTypes = {
   date: PropTypes.object,
   onChange: PropTypes.func,
   onPreviewChange: PropTypes.func,
+  onClickCurrentMonth: PropTypes.func,
   onRangeFocusChange: PropTypes.func,
   classNames: PropTypes.object,
   locale: PropTypes.object,
