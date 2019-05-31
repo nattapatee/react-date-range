@@ -1,6 +1,6 @@
 {
   "name": "react-date-range-thaiyear-custom",
-  "version": "1.0.3-beta",
+  "version": "1.0.4-beta",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {

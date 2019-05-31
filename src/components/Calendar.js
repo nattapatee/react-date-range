@@ -200,6 +200,15 @@ class Calendar extends PureComponent {
                 onClick={() => this.handdleClickMonth(moment(focusedDate))}>
                     {months[focusedDate.getMonth()]}
               </button>
+              <select
+                value={focusedDate.getMonth()}
+                onChange={e => changeShownDate(e.target.value, 'setMonth')}>
+                {locale.localize.months().map((month, i) => (
+                  <option key={i} value={i}>
+                    {months[i]}
+                  </option>
+                ))}
+              </select>
             </span>
             <span className={styles.monthAndYearDivider} />
             <span className={styles.yearPicker}>
@@ -208,6 +217,20 @@ class Calendar extends PureComponent {
                 onClick={() => this.handdleClickYear(moment(focusedDate))}>
                     {focusedDate.getFullYear() + 543}
               </button>
+              <select
+                value={focusedDate.getFullYear()}
+                onChange={e => changeShownDate(e.target.value, 'setYear')}>
+                {new Array(upperYearLimit - lowerYearLimit + 1)
+                  .fill(upperYearLimit)
+                  .map((val, i) => {
+                    const year = val - i;
+                    return (
+                      <option key={year} value={year}>
+                        {year + 543}
+                      </option>
+                    );
+                  })}
+              </select>
             </span> 
           </span>
         ) : (
@@ -267,6 +290,7 @@ class Calendar extends PureComponent {
                   readOnly
                   value={this.formatDateDisplay(range.startDate, 'เริ่มต้น')}
                 />
+                
               </span>
               <span
                 className={classnames(styles.dateDisplayItem, {
@@ -493,8 +517,8 @@ Calendar.defaultProps = {
     enabled: false,
   },
   direction: 'vertical',
-  maxDate: addYears(new Date(), 20),
-  minDate: addYears(new Date(), -100),
+  maxDate: addYears(new Date(), 10),
+  minDate: addYears(new Date(), -10),
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
   dragSelectionEnabled: true,
 };
