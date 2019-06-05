@@ -201,10 +201,11 @@ class Calendar extends PureComponent {
                     {months[focusedDate.getMonth()]}
               </button>
               <select
+                style={{width: "20px"}}
                 value={focusedDate.getMonth()}
                 onChange={e => changeShownDate(e.target.value, 'setMonth')}>
                 {locale.localize.months().map((month, i) => (
-                  <option key={i} value={i}>
+                  <option key={i} value={i} style={{fontSize: "14px"}}>
                     {months[i]}
                   </option>
                 ))}
@@ -218,6 +219,7 @@ class Calendar extends PureComponent {
                     {focusedDate.getFullYear() + 543}
               </button>
               <select
+                style={{width: "20px"}}
                 value={focusedDate.getFullYear()}
                 onChange={e => changeShownDate(e.target.value, 'setYear')}>
                 {new Array(upperYearLimit - lowerYearLimit + 1)
@@ -225,7 +227,7 @@ class Calendar extends PureComponent {
                   .map((val, i) => {
                     const year = val - i;
                     return (
-                      <option key={year} value={year}>
+                      <option key={year} value={year} style={{fontSize: "14px"}}>
                         {year + 543}
                       </option>
                     );
